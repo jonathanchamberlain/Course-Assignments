@@ -1,0 +1,43 @@
+README FOR MYSHELL
+AUTHOR: JONATHAN CHAMBERLAIN (JDCHAMBO@BU.EDU)
+
+Myshell executes a custom bash shell, reading in input from the user and passing commands with limited meta character
+implementation. Myshell consists of four functions:
+
+main
+parsetokens
+exectokens
+tokenizer
+
+main launches the shell, prompting the user for input using a while loop which terminates once the user supplies the 
+EOF token (Ctrl+D). Within the loop, the input is first passed into parsetokens to determine the number, positions, and 
+lengths of each token, and then the results are passed into exectokens to execute the commands supplied by the user.
+If the "n" flag is speciifed as the first argument from the user when calling mypshell, the "my_shell>" prompt does not print.
+
+parsetokens takes the input from the user, and scans character by character, marking the starting positions of each token, 
+and the lengths of each token, and returns the number of tokens.
+
+exectokens takes the input from the user, and the computed token positions, lengths, and total number of tokens, 
+and uses the information to execute the command. This is accomplished by first calling the tokenizer function, 
+which copies the tokens found previously in parsetokens into a new \0 delimited string. This new string, "tokenized", 
+is then scanned token by token in a loop which copies the commands in arguments into an array called argslist, and 
+takes the appropriate action when encountering one of the below metacharacters:
+
+
+> - output redirection, takes the following token to be the file destination; the input file is duped into stdout to write 
+the output
+
+< - input redirection, takes the following token to be the file source; the input file is duped into stdin to read the input
+
+| - pipe, sets the appropriate flags to indicate the end of the current command line, and increments the command count 
+(also done at loop exit as the final command won't be pipe delimited)
+
+& - background proceses, flips the appropriate flag to indicate a background process is being run.
+
+This loop also does error checking for invalid use of the meta characters 
+(e.g., multiple indirects, or & not being the last character).
+
+If the number of commands is > 1, the appropriate pipes are created and the file descriptors stored in an array. 
+The function then loops over the number of commands, generating the argv for the current command from the arglist array, 
+and then forking. The parent process closes its copy of the current pipes in use. The child process redirects and closes
+pipes and input/output files as appropriate, then calls execvp on the argv for the current command to execute the function. 
