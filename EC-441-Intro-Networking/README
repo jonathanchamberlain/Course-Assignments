@@ -1,0 +1,30 @@
+Primitive Network Monitor and statisitics collection - final project for EC 441
+
+https://docs.python.org/3/library/ipaddress.html - ipaddress module documentation
+Can specify whitelist by address block - ipaddress has method to generate the addresses from the IPv4 Network
+Otherwise, can compare the IP address to the network block directly
+
+For whitelist
+
+Loop until user indicates they are done
+
+On loop - Get input
+
+Validate that input is valid IP, has valid netmask if present
+
+If valid, write to whtielist.
+
+
+When comparing IPv4 addresses 
+
+On startup, load whitelist from file:
+  - Take inputs, and use to make IPv4Network object
+  - store in array of network objects
+
+On packet receipt, compare source IP to whitelist:
+  - if IPv4Address is in a IPv4Network, allow packet to proceed; if it is in none of the networks, block packet, p
+  rint error message
+  - Record packet stats (IP addr, option flags set, etc), write to appropriate stats file
+
+
+Socket module should be able to get the associated host name to each IP address (for printing in stats files)
