@@ -1,17 +1,17 @@
-"""
-whitelist.py
+""""
+Copyright jdchambo@bu.edu
 
-Gets input from user, in form of CIDR blocks, to use to generate whitelist 
+Gets input from user, in form of CIDR blocks, to use to generate whitelist
 for network monitoring. After receiving input, checks that address represents a
 valid network, and if so writes the text value to a file to be loaded from when
 the monitor is initialized.
 
-The user may specify a custom whitelist file, in order to be able to maintain 
+The user may specify a custom whitelist file, in order to be able to maintain
 separate whitelists (for separate networks, or for testing purposes). By default
 whitelist behavior is to append to existing file to avoid overwriting previous list
 entries.
 
-written in python 3.5.2 
+written in python 3.5.2
 """
 import ipaddress
 import sys
@@ -33,19 +33,18 @@ print("Press the Enter key on a new line to exit")
 while True:
   addr = input("Enter next network: ")
   if addr == '':
-    break
+      break
   try:
-    faddr = ipaddress.IPv4Network(addr)
+      faddr = ipaddress.IPv4Network(addr)
   except ipaddress.AddressValueError:
-    print("Invalid Address - must be valid IPv4 address in a.b.c.d format")
+      print("Invalid Address - must be valid IPv4 address in a.b.c.d format")
   except ipaddress.NetmaskValueError:
-    print("Invlaid Netmask - must be integer between 1 and 32")
+      print("Invalid Netmask - must be integer between 1 and 32")
   except ValueError:
-    print("Invalid Address - host bits set, recheck entry")
-  else: 
-    wl.write(addr+'\n')
+      print("Invalid Address - host bits set, recheck entry")
+  else:
+      wl.write(addr+'\n')
 
 
 # done reading, close open file
 wl.close();
-

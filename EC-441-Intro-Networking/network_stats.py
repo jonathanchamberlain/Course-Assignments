@@ -220,7 +220,7 @@ DSCP field values (precedence, delay, throughput, reliability, cost)
 if (sys.argv[1] == 'A' or sys.argv[1] == 'B' or sys.argv[1] == 'W'):
   if (wltotal > 0 or bltotal > 0):
     while True:
-      addr = input("Enter Source IP address for additional information, or Enter to exit:")
+      addr = input("Enter Target IP address for additional information, or Enter to exit:")
       if addr == '':
         break
       elif addr in blacklist:
@@ -228,9 +228,8 @@ if (sys.argv[1] == 'A' or sys.argv[1] == 'B' or sys.argv[1] == 'W'):
       elif addr in whitelist:
         printdetails(addr, detail)
       else:
-        print("\nInvalid Source IP, please try again\n")
+        print("\nInvalid Target IP, please try again\n")
 else:
   print("\nExpected Commandline Input of B for blacklisted IP stats, W for whitelisted IP stats, or A for all.\n")
   
-
 
