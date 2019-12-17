@@ -1,0 +1,38 @@
+\subsection*{Container Runtime Benchmarks}
+Chapter 5 of the CIS Docker Benchmarks documentation specifies security checks for the container runtimes themselves. These checks are the principal focus of this project, as the ways in which containers are started have many security implications. It is possible
+to provide potentially dangerous run-time parameters which can compromise the host as well as other containers running on the host. This is especially necessary as in many cases, the default behavior is to not set certain attributes. As a result, verifying the properties of a particular container runtime is critical. 
+
+There are a total of 31 Benchmarks specified in the documentation. We mention below the benchmarks which were our initial focus in implementing the application. The full list of benchmarks implemented per runtime is outlined in Figures \ref{fig:docker}, \ref{fig:crio}, and \ref{fig:containerd} in the Appendix. The full explanation of the scopes and intentions of the benchmarks is contained in the benchmark documentation \cite[Ch. 5]{center_for_internet_security}.
+
+ \subsubsection*{5.1 Do not disable AppArmor Profile} 
+AppArmor enforces security policy on the Linux OS and applications. The particular policy is speficied in the AppArmor profile; users can create their own profile or use Docker's default profile in order to enforce policy on the containers \cite[pp 126-7]{center_for_internet_security}. 
+
+\subsubsection*{5.2 Verify SELinux security options, if applicable} The default access control model in Docker containers is Discretionary Access Control (DAC) model. Within DAC, subjects are capable of passing permissions to other subjects. SELinux provides a Mandatory Access Control (MAC) system augments the default DAC model. MAC enables further restrictions on actions which can be made by subjects and prevent permissions from being passed on from one subject to another. This ultimately adds an extra layer of security \cite[128-9]{center_for_internet_security}.
+
+\subsubsection*{5.3 Restrict Linux Kernel Capabilities within containers} Docker containers begin with a restricted set of Linux Kernel Capabilities by default. With Linux Kernel Capabilities, any process may be granted the required capabilities rather than restricting the capabilities to root. As such, it is recommended to only have the capabilities necessary to run the container process. As an example, the following capabilities are generally not required for container processes to function as expected: \cite[pp 130-1]{center_for_internet_security} 
+\begin{itemize}
+    \item NET\_ADMIN
+    \item SYS\_ADMIN
+    \item SYS\_MODULE
+\end{itemize}
+
+The full list of possible capabilities are contained in the relevant man page \cite{man_capabilities}.
+
+\subsubsection*{5.6 Do not run ssh within containers} Running SSH within a container increases security management complexity by making it difficult to manage access policies and security requirements, keys and passwords across containers, and managing security upgrades for the SSH server. Rather than SSH, it is recommended to use other methods to interact with the container instance, such as Docker's exec and attach commands, or the nsenter comamnd \cite[pp 135-6]{center_for_internet_security}.
+
+% \subsubsection*{5.9 Do not share the host's network namespace (Scored)} This is potentially dangerous. It allows the container process to open low-numbered ports
+% like any other root process. It also allows the container to access network services like Dbus on the Docker host. Thus, a container process can potentially do unexpected things
+% such as shutting down the Docker host. You should not use this option.
+
+\subsubsection*{5.10 Limit memory usage for container}
+By default, no limit is set and the container is able to use all memory on the host. Use of memory limits prevents a situation where other containers on the same host cannot run due to one container using all available memory \cite[pp 142-3]{center_for_internet_security}.
+
+\subsubsection*{5.11 Set container CPU priority appropriately}
+
+By default, containers on Docker use equal sharing of CPU resources. CPU sharing enables prioritization of one container over others. Thus, containers running higher priority process will receive a greater share of the CPU resources ensuring that they are served better \cite[144-5]{center_for_internet_security}.
+
+\subsubsection*{5.24 Confirm cgroup usage} 
+By default, containers run under the docker cgroup, although system administrators may define a different cgroup under which the container is supposed to run. However, at runtime it is possible to attach a cgroup other than the one intended to be used, which can result in permissions and resources being granted to the container not allowed by the intended cgroup \cite[pp 168-9]{center_for_internet_security}.
+
+
+\subsubsection*{5.28 Use PIDs cgroup limit} The PIDs cgroup limit sets a limit on the number of processes which can run within a container at once. In particular, this limits the number of forks which can occur inside the container. Without such a limit, attackers could launch a fork bomb with a single command inside the container, which is capable of crashing the entire system. In such a case, a restart of the host is necessary to make the system functional \cite[pp 175-6]{center_for_internet_security}.

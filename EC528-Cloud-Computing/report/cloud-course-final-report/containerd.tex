@@ -1,0 +1,10 @@
+\subsubsection*{Containerd}
+
+Having defined multiple benchmark checks for Docker, we now expand our checks to the other in scope runtimes. In this subsection we detail how the applications performs the benchmark evaluations in containerd. As is noted below, the process is similar, with the primary difference being how containerd stores the relevant configuration files. As before, the first step is to find the target container's pid. In containerd this is accomplished by inspecting \textit{/run/containerd/io.containerd.runtime.v2.task/default/}
+\textit{<container-id>/init.pid}.
+
+Once the pid is obtained, evaluating benchmarks \textbf{5.1 Do not disable AppArmor Profile} and \textbf{5.2 Verify SELinux security options} is identical to in Docker, as procfs is related to the process on the host and does not differ based on the container runtime in use. 
+
+In order to obtain the cgroup path, we inspect the configuration json file, which here is located on the path \textit{/run/containerd/io.containerd.runtime.v2.task/default/} \textit{/<container-id>/config.json}.
+As in Docker, there is an attribute containing the \textbf{cgroup} path of a given container. In addition to being able to validate benchmark \textbf{5.24} directly, we are able to proceed to verification of benchmarks \textbf{5.10, 5.11, 5.28} as in Docker. Again, this is due to sysfs and the cgroup being related to processes on the host rather than anything specific to the container.
+ 

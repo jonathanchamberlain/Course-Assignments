@@ -1,0 +1,8 @@
+\subsection*{CIS Benchmarks}
+CIS is a community driven organization of volunteer professionals, aimed at refining best practices and tools for information security \cite{CIS_Communities}. CIS publishes various Benchmark documents for best practices for secure configuration of systems, including Docker \cite{CIS_Benchmarks}. There are no specific Benchmark documents for cri-o and containerd, however the majority of the Docker benchmarks are concerned with attributes which are not Docker-specific. 
+
+Thus, our design is focused on determining how the relevant setting or settings for each benchmark are enabled in each runtime, and validate that the benchmark is satisfied. As noted under the challenges section however, in many cases there is not an unambiguous pass condition, instead simply having a fail condition to check against. Where possible we highlighted instances that did not fail but do not necessarily follow a best practice highlighted elsewhere, or require manual follow up before being able to identify a pass/fail, as is the case with most of the image benchmarks.
+\input{cis5.tex}
+\input{cis4.tex}
+
+

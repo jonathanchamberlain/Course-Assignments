@@ -1,0 +1,14 @@
+\subsubsection*{Cri-o}
+
+In this subsection we describe how we evaluate selected benchmark checks within the cri-o runtime. The process for implementing a particular benchmark check is similar to those within Docker and Containerd.
+
+As before, we again find the container's pid. However, in cri-o this is contained within the state.json file, as opposed to inspecting an init.pid file: \textit{/var/lib/containers/storage/overlay-containers/} \textit{<container-id>/userdata/state.json}
+
+However, once the pid is obtained, the process to verify benchmarks \textbf{5.1 Do not disable AppArmor Profile} and \textbf{5.2 Verify SELinux security options} is again identical to that in Docker as with the pid we can use procfs to find the AppArmor and SELinux attributes. 
+
+To determine the cgroup path of the container, we again find the corresponding attribute in the configuration json file:
+\textit{//var/lib/containers/storage/overlay-containers/} \textit{<container-id>/userdata/config.json} file.
+From this file, we get \textbf{cgroup} path of a given container. Exposing this value also corresponds to \textbf{5.24} benchmark.
+
+Further, by using the cgroup path, we are able to validate benchmark \textbf{5.24} directly, as well as leverage \textit{sysfs} to validate benchmarks \textbf{5.10, 5.11, 5.28} as in Docker and containerd. 
+ 

@@ -1,0 +1,24 @@
+Project description: 8/10 
+General comments:
+
+Our main goal for the project description was to get you guys started rapidly, see if you understand your project and have an idea of who the users are and an MVP.  Most projects demonstrated that they are developing an understanding, but are not there yet. We have given the projects a preliminary grade. We will review the project descriptions again next week during the first sprint demos, and finalize our grade.  Please see our comments and address them together with your mentors.
+
+Sspecific comments:
+
+What do containers have to do with virtual machines?
+
+Please spell check anything you put out there. Also, there are severe grammatical errors, please work to improve the English. In particular the writing changes drastically between section 3 and section 4 (which is much worse)
+
+Is this really about moving containers between different environments,
+or is it about having a common management framework
+for controlling your containers in those different environments?
+
+It seems like OCI solves the former, and you are trying to solve the latter? 
+
+Please clarify in the vision… “A software developer would like to move an application from Docker to Cri-o”
+- this isn’t “moving” in the sense that a user would move something - it’s developing the same functionality on Cri-o that
+you already have on Docker
+
+What is a framework here?  Is it a library? Is it a service running somewhere?
+
+Your acceptance criteria is quite concrete, which is good.

@@ -1,0 +1,56 @@
+SUMMARY TIMINGS/THREAD RATES
+
+                      Iter/Thd    1 thrd   2 thrds   3 thrds   4 thrds   5 thrds   6 thrds   7 thrds   8 thrds   9 thrds  10 thrds
+               Limit      1000    573.30   1061.30   1073.62   1058.72    973.25    937.65    958.15    913.90   1012.61    971.82
+  Overhead:DockerCLI        15      0.81      1.40      1.64
+
+DETAILED COMMAND TIMINGS/STATISTICS
+
+  Overhead:DockerCLI:1       Min       Max       Avg    Median    Stddev    Errors
+                   run    908.00    948.00    927.67    929.00     12.39         0
+                  stop    227.00    283.00    246.73    241.00     15.50         0
+                delete     53.00     61.00     57.27     57.00      2.05         0
+  Overhead:DockerCLI:2       Min       Max       Avg    Median    Stddev    Errors
+                   run    966.00   1116.00   1027.23   1023.00     32.46         0
+                  stop    228.00    331.00    281.60    281.00     29.83         0
+                delete     59.00    129.00     96.83     98.50     17.00         0
+  Overhead:DockerCLI:3       Min       Max       Avg    Median    Stddev    Errors
+                   run   1088.00   1557.00   1332.11   1319.00     96.98         0
+                  stop    230.00    489.00    351.18    346.00     62.99         0
+                delete     54.00    165.00    108.44    110.00     24.58         0
+
+OVERHEAD
+
+docker driver (binary: /usr/bin/docker)
+[CLIENT:18.09.7|API:1.39][SERVER:18.09.7|API:1.39 (minimum version 1.12)|Storage:overlay2|BackingFS:extfs|Kernel:4.15.0-54-generic]
+
+  Bench / driver / threads       Min       Max       Avg       Min       Max       Avg     Mem %     CPU x
+      Overhead:DockerCLI:1     92 MB     92 MB     92 MB    0.00 %   14.00 %    4.54 %
+      Overhead:DockerCLI:2     92 MB     92 MB     92 MB    0.00 %   18.01 %    7.59 %
+      Overhead:DockerCLI:3     92 MB     92 MB     92 MB    0.00 %   19.67 %    9.05 %
+
+
+
+
+-----------
+SUMMARY TIMINGS/THREAD RATES
+
+               Iter/Thd    1 thrd   2 thrds   3 thrds   4 thrds   5 thrds   6 thrds   7 thrds   8 thrds   9 thrds  10 thrds
+        Limit      1000    586.44   1057.89    978.62    990.65   1013.48   1041.62   1060.95    943.40    994.37   1018.83
+  Custom:Runc        15      2.61      3.70      4.30
+
+DETAILED COMMAND TIMINGS/STATISTICS
+
+  Custom:Runc:1       Min       Max       Avg    Median    Stddev    Errors
+            run    298.00    387.00    368.20    374.00     20.99         0
+           stop      5.00      9.00      6.87      7.00      1.26         0
+         delete      5.00      7.00      6.13      6.00      0.72        15
+  Custom:Runc:2       Min       Max       Avg    Median    Stddev    Errors
+            run    322.00    565.00    515.07    520.00     44.10         0
+           stop      5.00     11.00      7.43      7.00      1.52         0
+         delete      5.00     11.00      7.43      7.00      1.80        30
+  Custom:Runc:3       Min       Max       Avg    Median    Stddev    Errors
+            run    314.00    794.00    664.18    665.00     77.08         0
+           stop      5.00     10.00      7.38      7.00      1.29         0
+         delete      5.00     10.00      6.44      6.00      0.83        44
+INFO[0082] Benchmark runs complete

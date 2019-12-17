@@ -1,0 +1,5 @@
+Where possible, the Interoperable Application leverages the attributes that are exposed in \textit{sysfs} and \textit{procfs} per process in Linux. sysfs and proc are pseudo-filesystems which provide an interface to kernel data structures. The files under sysfs provide information about devices, kernel modules, filesystems, and other kernel components. For instance, sysfs provides a means to determine if memory usage has been limited, as well as if the CPU priority is set appropriately. proc is primarily used to determine if the AppArmor Profile is enabled for the associated process id. 
+
+The use of these interfaces limits the possibility that future updates to the containers causes a change in the configuration file structure, which would then require an overhaul of the applications to ensure that the security checks can still be carried out for the impacted runtime. However, some attributes are only found in the configuration files. This is especially true for any attribute related to the image files. Thus, a major part of this project was dissecting how each runtime operates, and which configuration files are utilized. 
+
+

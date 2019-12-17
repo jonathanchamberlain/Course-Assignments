@@ -1,0 +1,23 @@
+\subsection*{Container Images and Build File Benchmarks}
+Chapter 4 of the CIS Docker Benchmarks document is focused on the container images/build files. While the primary focus of our work was on the containers themselves, the images are what contain the executable code, libraries, etc. that permit an application to run within the container. Thus, the use of proper build files are important for secure infrastructure. The following specific checks were implemented in at least one runtime:
+
+\subsubsection*{4.1 Create a user for the container} By default, the build file does not specify a user resulting in root becomming the default user. It is typically good practice to not run the container as root in order to limit user privaleges, and by specifying a user within the build file itself, user namespace remapping is not requried to prevent containers from being run as root \cite[pp 105-6]{center_for_internet_security}.
+
+\subsubsection*{4.2 Use trusted base images for containers}  Ideally, containers should come from verified sources or be based on a build file written from scratch by the organization using the container. If from a remote repository, there should be proof that the image was obtained from a trusted secure channel \cite[pp  107-8]{center_for_internet_security}.
+
+\subsubsection*{4.5 Enable Content trust for Docker} Content trust enables the use of digital signatures from remote registries. This permits verification on the client-side of the integrity and publisher of the image \cite[pp 113-4]{center_for_internet_security}.
+
+\subsubsection*{4.6 Add HEALTHCHECK instruction to the container image} Healthcheck instructions ensure availability by ensuring that the Docker engine checks running container instances against the provided instruction. If a container has stopped working, this allows the engine to instantiate a new container and exit the non-working container \cite[p 115]{center_for_internet_security}.
+
+\subsubsection*{4.9 Use COPY instead of ADD in Dockerfile} Using COPY instructions in Dockerfiles copies the relevant files from local host. If ADD is used instead, files could be retrieved from remote registries, and in turn cause malicious files to be unpack from unverified URLs \cite[pp 120-1]{center_for_internet_security}
+
+In the section on the Interoperable Image Application, we discuss the implementation of checks for the above Benchmarks. In addition, Chapter 4 of the document specifies the following benchmarks which were not implemented; the reasons for not doing so are elaborated on in the Challenges and Take Aways section:
+
+\begin{itemize}
+    \item 4.3 Do not install unnecessary packages in the container
+    \item 4.4 Scan and rebuild the images to include security patches
+    \item 4.7 Do not use update instructions alone in the Dockerfile
+    \item 4.8 Remove setuid and setgid permissions in the images
+    \item 4.10 Do not store secrets in Dockerfiles
+    \item 4.11 Install verified packages only
+\end{itemize}
